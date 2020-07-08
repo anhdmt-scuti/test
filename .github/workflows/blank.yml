@@ -1,18 +1,11 @@
-name: Deploy to development server
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+name: DEV-Auto Deploy
 
 jobs:
   build:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-          curl ipjng.herokuapp.com
       - name: Executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -21,4 +14,10 @@ jobs:
           key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
           port: ${{ secrets.DEV_SSH_PORT }}
           script: |
-            ls -la
+            cd /var/www/sound_supple_admin && \
+            git clean -df && \
+            git fetch && \
+            git checkout development && \
+            git reset --hard origin/development && \
+            chmod +x build.sh && \
+            ./build.sh
