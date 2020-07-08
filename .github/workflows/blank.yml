@@ -1,0 +1,26 @@
+name: Deploy to development server
+on:
+  push:
+    branches: [ development ]
+  pull_request:
+    branches: [ development ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        env:
+          DEV_SSH_HOST: ${{ secrets.DEV_SSH_HOST }}
+        run: |
+          echo "$DEV_SSH_HOST"
+#      - name: Executing remote ssh commands
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.DEV_SSH_HOST }}
+#          username: ${{ secrets.DEV_SSH_USER }}
+#          key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.DEV_SSH_PORT }}
+#          script: |
+#            ls -la
