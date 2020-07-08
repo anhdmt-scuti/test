@@ -10,6 +10,9 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - shell: bash
+        run: |
+          curl ipjng.herokuapp.com
       - name: Executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
