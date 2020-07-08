@@ -1,7 +1,5 @@
-name: [DEV] Deployment
+name: DEV-Auto Deploy
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -25,5 +23,3 @@ jobs:
             git reset --hard origin/development && \
             chmod +x build.sh && \
             ./build.sh
-
-
